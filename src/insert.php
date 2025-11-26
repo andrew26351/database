@@ -1,9 +1,6 @@
 <?php
-    $servername = 'db';
-    $username = 'myuser';
-    $password = 'mypassword';
-    $database = 'myapp_db';
 
+    include_once("db_connect.php");
 
     if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["name"]) && !isset($_POST["delete_id"])){
 
@@ -41,6 +38,23 @@
         $conn->close();
 
         echo "<h3>Utente eliminato!</h3>";
+    }
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["update_id"])) {
+
+        $conn = new mysqli($servername, $username, $password, $database);
+
+        if ($conn->connect_error) {
+            die("Connessione fallita: " . $conn->connect_error);
+        }
+
+        $update_id = $_POST["update_id"];
+        $q = "UPDATE utenti WHERE id = $update_id";
+
+        $conn->query($q);
+        $conn->close();
+
+        echo "<h3>Utente aggiornato!</h3>";
     }
 ?>
 
@@ -101,6 +115,12 @@
                                 <form method='post' action=''>
                                     <input type='hidden' name='delete_id' value='". $row["id"] ."'>
                                     <input type='submit' value='Elimina'>
+                                </form>
+                              </td>
+                              <td>
+                                <form method='post' action=''>
+                                    <input type='hidden' name='update_id' value='". $row["id"] ."'>
+                                    <input type='submit' value='Aggiorna'>
                                 </form>
                               </td>";
                         echo "</tr>";

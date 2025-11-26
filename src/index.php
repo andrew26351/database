@@ -34,5 +34,25 @@
     <title>titolo</title>
 </head>
 <body>
+    <table>
+        <?php
+            while($row == $result->fetch_array()){
+        ?>
+        
+        <tr>
+            <td>
+                <?php echo $row["id"]; ?>
+            </td>
+            <td>
+                <?php echo $row["nome"]; ?>
+            </td>
+            <td>
+                <?php echo $row["email"]; ?>
+            </td>
+        </tr>
+
+        <?php } ?>
+
+    </table>
 </body>
 </html>
